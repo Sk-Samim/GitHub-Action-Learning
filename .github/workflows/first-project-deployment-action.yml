@@ -1,7 +1,11 @@
 name: Deploy Project
-on: 
- - push
- - workflow_dispatch
+on:
+  push:
+    paths:
+      - .github/workflows/first-project-deployment-action.yml
+      - First_Project_GA/**
+  workflow_dispatch:
+
 
 defaults:
   run:
