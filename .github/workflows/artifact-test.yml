@@ -1,8 +1,9 @@
 name: Test uploading and downloading artifacts
-on: 
- - push
- - workflow_dispatch
-
+on:
+  push:
+    paths:
+      - ./.github/workflows/artifact-test.yml
+  workflow_dispatch:
 jobs: 
   build: 
     runs-on: ubuntu-latest 
