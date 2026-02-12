@@ -1,0 +1,22 @@
+name: Testing job outputs
+on:
+  push:
+    paths:
+      - .github/workflows/job-output-test.yml
+  workflow_dispatch:
+
+jobs: 
+  build: 
+    runs-on: ubuntu-latest 
+    outputs: 
+      version: ${{ steps.set_version.outputs.version }} 
+  
+    steps: 
+      - id: set_version 
+        run: echo "version=1.0.0" >> $GITHUB_OUTPUT 
+  
+  deploy: 
+    runs-on: ubuntu-latest 
+    needs: build 
+    steps: 
+      - run: echo "Deploying version ${{ needs.build.outputs.version }}" 
