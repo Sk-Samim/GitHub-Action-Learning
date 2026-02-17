@@ -7,7 +7,7 @@ on:
 
 # Workflow-level env using environment secret
 env:
-  GLOBAL_TOKEN: ${{ secrets.GLOBAL_TOKEN }}
+  SECRET_1: ${{ secrets.SECRET_1 }}
 
 jobs:
   demo:
@@ -19,27 +19,27 @@ jobs:
 
     # Job-level env using environment secrets
     env:
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASS: ${{ secrets.DB_PASS }}
+      SECRET_2: ${{ secrets.SECRET_2 }}
+      SECRET_3: ${{ secrets.SECRET_3 }}
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Use workflow + job level environment secrets
         run: |
-          echo "GLOBAL_TOKEN is available as: $GLOBAL_TOKEN (masked)"
-          echo "GLOBAL_TOKEN length = ${#GLOBAL_TOKEN}"
+          echo "SECRET_1 is available as: $SECRET_1 (masked)"
+          echo "SECRET_1 length = ${#SECRET_1}"
 
-          echo "DB_USER is available as: $DB_USER (masked)"
-          echo "DB_USER length = ${#DB_USER}"
+          echo "SECRET_2 is available as: $SECRET_2 (masked)"
+          echo "SECRET_2 length = ${#SECRET_2}"
 
-          echo "DB_PASS is available as: $DB_PASS (masked)"
-          echo "DB_PASS length = ${#DB_PASS}"
+          echo "SECRET_3 is available as: $SECRET_3 (masked)"
+          echo "SECRET_3 length = ${#SECRET_3}"
 
       # Step-level env using environment secret
       - name: Step-level environment secret example
         env:
-          API_KEY: ${{ secrets.API_KEY }}
+          SECRET_4: ${{ secrets.SECRET_4 }}
         run: |
-          echo "API_KEY is available only in this step as: $API_KEY (masked)"
-          echo "API_KEY length = ${#API_KEY}"
+          echo "SECRET_4 is available only in this step as: $SECRET_4 (masked)"
+          echo "SECRET_4 length = ${#SECRET_4}"
