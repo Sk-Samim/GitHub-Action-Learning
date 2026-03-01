@@ -1,0 +1,57 @@
+name: testing conditional steps/jobs execution
+
+on: push
+
+jobs:
+  job1:
+   runs-on: ubuntu-latest
+   # Conditional steps execution
+   steps:
+     - name: deploy
+       if: github.ref == 'refs/heads/main'
+       run: echo "deploying..."
+
+     - name: PR checks
+       if: github.event_name == 'pull_request'
+       run: echo "Running PR check..."
+
+  # Conditional jobs execution
+  job2:
+   runs-on: ubuntu-latest
+   steps:
+     - name: build 
+       run: echo "Building..."
+
+  # Run this job only on main branch
+  job3:
+   runs-on: ubuntu-latest
+   needs: job2 
+   if: github.ref == 'refs/heads/main'
+   steps:
+     - name: post-deployment
+       run: echo "deploying..."
+
+  # Run this job only when job2 is success
+  job4:
+    needs: job2
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "deploying..."
+  
+  job5:
+    runs-on: ubuntu-latest
+    outputs:
+      deploy: ${{ steps.flat.output.deploy }}
+    
+    steps:
+      - id: flat
+        run: echo "deploy=true" >> $GITHUB_OUTPUT
+
+  # Run this job only when the output value of job5 is true
+  job6:
+    needs: job5
+    if: needs.job5.outputs.deploy == 'true'
+    runs-on: ubuntu-latest
+    steps:
+     - run: echo "Deploying becaues deploy=true"
