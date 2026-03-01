@@ -7,10 +7,9 @@ on:
 
 jobs:
   call-reusable:
-   uses: .github/workflows/reusable-workflow-file-test.yml
+   uses: ./.github/workflows/reusable-workflow-file-test.yml
    with:
     node-version: "20"
-
    secrets:
     API_KEY: ${{ secrets.API_KEY }}
 
