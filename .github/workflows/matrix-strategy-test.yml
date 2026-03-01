@@ -1,7 +1,10 @@
 name: Testing matrix strategy
 
-on: push
-
+on:
+  push:
+    paths:
+      - .github/workflows/matrix-strategy-test.yml
+      
 jobs:
   test:
    strategy:

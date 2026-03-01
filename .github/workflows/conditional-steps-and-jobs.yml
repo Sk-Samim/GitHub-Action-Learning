@@ -1,6 +1,9 @@
 name: testing conditional steps/jobs execution
 
-on: push
+on:
+  push:
+    paths:
+      - .github/workflows/conditional-steps-and-jobs.yml
 
 jobs:
   job1:

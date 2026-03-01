@@ -1,6 +1,9 @@
 name: Test pre-build conditional functions for steps/jobs execution
 
-on: push
+on:
+  push:
+    paths:
+      - .github/workflows/pre-build-conditional-functions-test.yml
 
 jobs:
   job1:
