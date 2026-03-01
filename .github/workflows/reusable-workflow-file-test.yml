@@ -1,0 +1,37 @@
+name: Testing re-usable workflow file 
+
+on: 
+  workflow_call:
+    inputs:
+      node-version:
+        description: "Node.js version"
+        required: true
+        type: string
+
+    secrets:
+      API_KEY:
+        required: true
+
+    outputs:
+      app-version:
+        description: "Generated app version"
+        value: ${{jobs.build.outputs.app_version}}
+
+jobs:
+  build:
+   runs-on: ubuntu-latest
+   outputs:
+     app_version: ${{ steps.set_version.outputs.version }}
+
+   steps:
+     - name: display node version 
+       run: echo "node version = ${{ inputs.node-version }}"
+
+     - name: set app version
+       id: set_version
+       run: echo "version=1.0.${{ github.run_number }}" >> $GITHUB_OUTPUT
+
+     - name: display secret length
+       env: 
+         API_KEY: ${{ secret.API_KEY }}
+       run: echo "Secret length = ${#API_KEY}"

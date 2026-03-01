@@ -1,0 +1,22 @@
+name: This is the caller workflow file for the reusable workflow file 
+
+on:
+  push:
+   paths:
+     - .github/workflows/reusable-workflow-file-caller.yml
+
+jobs:
+  call-reusable:
+   uses: .github/workflows/reusable-workflow-file-test.yml
+   with:
+    node-version: "20"
+
+   secrets:
+    API_KEY: ${{ secrets.API_KEY }}
+
+  deploy:
+   needs: call-reusable
+   runs-on: ubuntu-latest
+   
+   steps:
+     - run: echo "Version is ${{ needs.call-reusable.outputs.app-version}}"
