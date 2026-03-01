@@ -1,0 +1,79 @@
+name: Test pre-build conditional functions for steps/jobs execution
+
+on: push
+
+jobs:
+  job1:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Run tests
+       run: exit 0
+
+     - name: deploy
+       if: success()
+       run: echo "Deploying becaues previous step succeeded"
+
+     - name: Run test2
+       run: exit 1
+
+     - name: Notify failure
+       if: failure()
+       run: echo "Test2 failed!"
+
+     - name: Run test3
+       if: always()
+       run: echo "run anyway even if previous step pass/fails"
+
+    # This step runs only when someone manually stops this workflow
+     - name: Cleanup on cancel
+       if: cancelled()
+       run: echo "Workflow as cancelled. Cleaning up..."
+
+
+  job2:
+   runs-on: ubuntu-latest
+   steps:
+     - run: exit 0
+
+  # This job runs only when job2 passes     
+  job3:
+   needs: job2
+   if: success()
+   runs-on: ubuntu-latest
+   steps:
+     - run: echo "Deploying becaues build job succeeded"
+       
+  job4:
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1
+
+  # This job run only when job4 fails      
+  job5:
+    needs: job4
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Uploading logs only if job4 failed"
+
+  # This job runs no matter the result of job4      
+  job6:
+    needs: job4
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Cleanup runs no matter what pass/fails"
+        
+  job7:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 60
+
+  # This job runs only if someone cancelles this workflow      
+  handle_cancle:
+    needs: job7 
+    if: cancelled()
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Workflow was cancelled"
+   
