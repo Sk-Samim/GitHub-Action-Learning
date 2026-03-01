@@ -42,7 +42,7 @@ jobs:
   job5:
     runs-on: ubuntu-latest
     outputs:
-      deploy: ${{ steps.flat.output.deploy }}
+      deploy: ${{ steps.flat.outputs.deploy }}
     
     steps:
       - id: flat
