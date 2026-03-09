@@ -1,0 +1,27 @@
+name: This workflow is to test service containers 
+on:
+  push:
+    paths:
+      - .github/workflows/service-container-test.yml
+
+jobs:
+  Integrations:
+    runs-on: ubuntu-latest
+    container:
+      image: node:20 # This workflow runs inside this container
+    
+    services:
+      postgres:   # This is the service container hostname and this can be anything
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: pass
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Postgres connection
+        run: npm test
+        env:
+          DATABASE_URL: postgres://postgres:pass@postgres:5432/postgres
+
+      
+  
