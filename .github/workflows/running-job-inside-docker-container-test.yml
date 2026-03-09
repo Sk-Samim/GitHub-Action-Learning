@@ -1,0 +1,15 @@
+name: Run Job in Docker Container  
+on:
+  push:
+    paths:
+      - .github/workflows/running-job-inside-docker-container-test.yml
+
+jobs:
+ test:  
+   runs-on: ubuntu-latest  
+   container:  
+     image: node:20 # Job runs inside this Docker image  
+   steps:  
+   - uses: actions/checkout@v4  
+   - run: node -v 
+   - run: echo "This job is running inside a node js container version 20" 
