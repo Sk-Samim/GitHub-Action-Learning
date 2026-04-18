@@ -8,7 +8,7 @@ inputs:
 
 outputs:
   message:
-    value: steps.greet.outputs
+    value: ${{ steps.greet.outputs.message }}
     description: "Generate greeting message"
 
 runs:
@@ -16,6 +16,6 @@ runs:
   steps:
     - id: greet
       run: |
-        msg = "Hello, ${{ inputs.username }}"
+        msg="Hello, ${{ inputs.username }}"
         echo "message=$msg" >> $GITHUB_OUTPUT
       shell: bash
