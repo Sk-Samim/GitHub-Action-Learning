@@ -8,6 +8,7 @@ inputs:
 
 outputs:
   message:
+    value: steps.greet.outputs
     description: "Generate greeting message"
 
 runs:
