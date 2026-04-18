@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - .github/workflows/custome-composite-actions-test.yml
+      - .github/actions/composite_actions/
   workflow_dispatch:
 
 jobs:
