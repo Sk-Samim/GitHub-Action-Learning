@@ -1,0 +1,20 @@
+name: "Greet Actions"
+description: "Takes a name and returns a greeting"
+
+inputs:
+  username:
+    required: true
+    description: "Name of the user"
+
+outputs:
+  message:
+    description: "Generate greeting message"
+
+runs:
+  using: "composite"
+  steps:
+    - id: greet
+      run: |
+        msg = "Hello, ${{ inputs.username }}"
+        echo "message=$msg" >> $GITHUB_OUTPUT
+      shell: bash

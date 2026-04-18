@@ -1,0 +1,19 @@
+name: "Greet using custome composite actions"
+description: "This workflow file is being used for testing custome composite action"
+
+on:
+  push:
+    paths:
+      - .github/workflows/custome-composite-actions-test.yml
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - id: step1
+        uses: ./.github/actions/composite_actions
+        with:
+          username: Samim
+      
+      - run: echo "Output is ${{ steps.step1.outputs.message }}"
