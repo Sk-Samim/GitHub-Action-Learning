@@ -1,0 +1,22 @@
+name: 'Deploy a static website to S3 bucket'
+description: 'This custome action is used to deploy a static website in S3 bucket'
+ 
+inputs:
+  bucket:
+    description: 'S3 bucket name'
+    required: true
+  bucket-region:
+    description: 'The region of the S3 bucket'
+    required: false
+    default: 'us-east-1'
+  website-folder:
+    description: 'The folder containing the deployable files.'
+    required: true
+ 
+outputs:
+  website-url:
+    description: "The URL of the deployed website."
+ 
+runs:
+  using: "node20"
+  main: "index.js"
